@@ -116,7 +116,8 @@ az databricks workspace create \
       #10.2 Connect to Git Repo( https://oauth:TOKEN@github.com/NubeEra-DataEngineering/Databricks-notebooks.git  )
         #  ghp_YOUR_GITHUB_TOKEN_gh
       #10.3 Cluster with JSON File
-      #10.4 Attach Existing Notebook
+        # Policy: Unrestricted , Single Node 
+      #10.4 Attach Existing Notebook that is: 01.Unity-Catalog-Volumes        
       #10.5 Attach Cluster to Notebook)
 #######################################
 %sql
