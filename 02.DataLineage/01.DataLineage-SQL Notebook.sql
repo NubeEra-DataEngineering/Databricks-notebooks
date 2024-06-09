@@ -78,4 +78,45 @@ FROM
 
 -- COMMAND ----------
 
+-- MAGIC %md
+-- MAGIC # Please Check into Lineage Graph Explorer
+-- MAGIC ## 1. Catalog --> Metastore --> Catalog --> Schema
+-- MAGIC ## 2.  Table(dinner) --> See Lineage Graph
 
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC from pyspark.sql.functions import rand, round
+-- MAGIC df = spark.range(3).withColumn("price", round(10*rand(seed=42),2)).withColumnRenamed("id","recipe_id")
+-- MAGIC
+-- MAGIC df.write.mode("overwrite").saveAsTable("lineage_data.lineagedemo.price")
+-- MAGIC
+-- MAGIC
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC dinner = spark.read.table("lineage_data.lineagedemo.dinner")
+-- MAGIC price = spark.read.table("lineage_data.lineagedemo.price")
+-- MAGIC
+-- MAGIC
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC dinner_price = dinner.join(price, on="recipe_id")
+-- MAGIC dinner_price.write.mode("overwrite").saveAsTable("lineage_data.lineagedemo.dinner_price")
+
+-- COMMAND ----------
+
+SELECT * FROM lineage_data.lineagedemo.menu
+
+-- COMMAND ----------
+
+GRANT USE SCHEMA on lineage_data.lineagedemo to `sam@company.com`;
+GRANT SELECT on lineage_data.lineagedemo.menu
+ to `francis@company.com`;
+
+-- COMMAND ----------
+
+GRANT BROWSE on lineage_data to `mujahed@company.com`;
