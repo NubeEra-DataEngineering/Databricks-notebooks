@@ -110,9 +110,9 @@ az databricks workspace create \
 
 # 10. In Databricks Workspace 
       #10.1 Delete if Already Exisits & Create Metastore
-        # AZ_CONTAINER_NAME@AZ_STORAGE_ACCOUNT_NAME.dfs.core.windows.net/
-        # Attach Workspace to MetaStore
-        # Launch Workspace: https://adb-3831012682118653.13.azuredatabricks.net/aad/auth
+        # AZ_CONTAINER_NAME@AZ_STORAGE_ACCOUNT_NAME.dfs.core.windows.net/        
+        # Attach Workspace to Newly Created MetaStore
+        # Launch Workspace: https://WORKSPACE_ID.azuredatabricks.net/aad/auth
       #10.2 Connect to Git Repo( https://oauth:TOKEN@github.com/NubeEra-DataEngineering/Databricks-notebooks.git  )
         #  ghp_YOUR_GITHUB_TOKEN_gh
       #10.3 Cluster with JSON File
@@ -120,16 +120,7 @@ az databricks workspace create \
       #10.4 Attach Existing Notebook that is: 01.Unity-Catalog-Volumes        
       #10.5 Attach Cluster to Notebook)
 #######################################
-%sql
-CREATE CATALOG IF NOT EXISTS exo_cat;
-GRANT USE CATALOG ON CATALOG exo_cat TO `account users`;
-USE CATALOG exo_cat;
-CREATE SCHEMA IF NOT EXISTS patients;
-CREATE VOLUME IF NOT EXISTS exo_cat.patients.fhir_vol;
-DESCRIBE VOLUME exo_cat.patients.fhir_vol;
 
-file_info_list = dbutils.fs.ls("/Volumes/exo_cat/patients/fhir_vol")
-display(file_info_list)
-
-%sql
-SHOW STORAGE CREDENTIALS
+#11. Delete Resource Group:
+###########################
+az group delete --name $AZ_RG_NAME --yes
