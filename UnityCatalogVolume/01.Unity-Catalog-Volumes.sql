@@ -45,24 +45,24 @@ SHOW CATALOGS;
 -- COMMAND ----------
 
 --- create a new catalog (optional)
-CREATE CATALOG IF NOT EXISTS quickstart1catalog;
+CREATE CATALOG IF NOT EXISTS quickstart_catalog;
 
 -- COMMAND ----------
 
 -- Set the current catalog
-USE CATALOG quickstart1catalog;
+USE CATALOG quickstart_catalog;
 
 -- COMMAND ----------
 
 --- Check grants on the quickstart catalog
-SHOW GRANTS ON CATALOG quickstart1catalog;
+SHOW GRANTS ON CATALOG quickstart_catalog;
 
 -- COMMAND ----------
 
 --- Make sure that all required users have USE CATALOG priviledges on the catalog. 
 --- In this example, we grant the priviledge to all account users.
 GRANT USE CATALOG
-ON CATALOG quickstart1catalog
+ON CATALOG quickstart_catalog
 TO `account users`;
 
 -- COMMAND ----------
@@ -123,18 +123,18 @@ USE SCHEMA quickstart_schema;
 --- Grant CREATE VOLUME on a Catalog or Schema.
 --- When granted at Catalog level, users will be able to create Volumes on any schema in this Catalog.
 GRANT CREATE VOLUME
-ON CATALOG quickstart1catalog
+ON CATALOG quickstart_catalog
 TO `account users`;
 
 -- COMMAND ----------
 
 --- Create an external volume under the newly created directory
-CREATE VOLUME IF NOT EXISTS quickstart1catalog.quickstart_schema.quickstart_volume
+CREATE VOLUME IF NOT EXISTS quickstart_catalog.quickstart_schema.quickstart_managed_volume
 COMMENT 'This is my example managed volume'
 
 -- COMMAND ----------
 
--- MAGIC %fs ls dbfs:/Volumes/quickstart1catalog/quickstart_schema/quickstart_volume
+-- MAGIC %fs ls dbfs:/Volumes/quickstart_catalog/quickstart_schema/quickstart_managed_volume
 
 -- COMMAND ----------
 
@@ -152,7 +152,7 @@ COMMENT 'This is my example managed volume'
 -- COMMAND ----------
 
 -- MAGIC %python
--- MAGIC dbutils.fs.ls("/Volumes/quickstart1catalog/quickstart_schema/quickstart_volume")
+-- MAGIC dbutils.fs.ls("/Volumes/quickstart_catalog/quickstart_schema/quickstart_managed_volume")
 
 -- COMMAND ----------
 
@@ -162,7 +162,7 @@ COMMENT 'This is my example managed volume'
 -- COMMAND ----------
 
 -- MAGIC %python
--- MAGIC dbutils.fs.cp("dbfs:/databricks-datasets/wine-quality/winequality-red.csv", "/Volumes/quickstart1catalog/quickstart_schema/quickstart_volume/")
+-- MAGIC dbutils.fs.cp("dbfs:/databricks-datasets/wine-quality/winequality-red.csv", "/Volumes/quickstart_catalog/quickstart_schema/quickstart_managed_volume/")
 
 -- COMMAND ----------
 
@@ -172,7 +172,7 @@ COMMENT 'This is my example managed volume'
 -- COMMAND ----------
 
 -- MAGIC %python
--- MAGIC dbutils.fs.ls("/Volumes/quickstart1catalog/quickstart_schema/quickstart_volume/")
+-- MAGIC dbutils.fs.ls("/Volumes/quickstart_catalog/quickstart_schema/quickstart_managed_volume/")
 
 -- COMMAND ----------
 
@@ -195,15 +195,15 @@ SHOW VOLUMES IN quickstart_schema;
 
 -- COMMAND ----------
 
---- ALTER VOLUME quickstart_catalog.quickstart_schema.quickstart_volume RENAME TO quickstart_catalog.quickstart_schema.my_quickstart_volume
+ALTER VOLUME quickstart_catalog.quickstart_schema.quickstart_managed_volume RENAME TO quickstart_catalog.quickstart_schema.my_quickstart_managed_volume
 
 -- COMMAND ----------
 
-ALTER VOLUME quickstart_catalog.quickstart_schema.quickstart_volume SET OWNER TO `account users`
+ALTER VOLUME quickstart_catalog.quickstart_schema.my_quickstart_managed_volume SET OWNER TO `account users`
 
 -- COMMAND ----------
 
-COMMENT ON VOLUME quickstart_catalog.quickstart_schema.quickstart_volume IS 'This is a shared Volume';
+COMMENT ON VOLUME quickstart_catalog.quickstart_schema.my_quickstart_managed_volume IS 'This is a shared Volume';
 
 -- COMMAND ----------
 
@@ -219,7 +219,7 @@ COMMENT ON VOLUME quickstart_catalog.quickstart_schema.quickstart_volume IS 'Thi
 -- COMMAND ----------
 
 --- Drop the managed Volume. Uncomment the following line to try it out. 
---- DROP VOLUME IF EXISTS quickstart_catalog.quickstart_schema.quickstart_volume
+DROP VOLUME IF EXISTS quickstart_catalog.quickstart_schema.my_quickstart_managed_volume
 
 -- COMMAND ----------
 
@@ -254,7 +254,7 @@ COMMENT ON VOLUME quickstart_catalog.quickstart_schema.quickstart_volume IS 'Thi
 -- COMMAND ----------
 
 --- Lists all privileges that are granted on a Volume.
-SHOW GRANTS ON VOLUME quickstart_catalog.quickstart_schema.quickstart_volume;
+--- SHOW GRANTS ON VOLUME quickstart_catalog.quickstart_schema.my_quickstart_managed_volume;
 
 -- COMMAND ----------
 
