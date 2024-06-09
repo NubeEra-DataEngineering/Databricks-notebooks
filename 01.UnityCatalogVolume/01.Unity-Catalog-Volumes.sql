@@ -251,6 +251,17 @@ DROP VOLUME IF EXISTS quickstart_catalog.quickstart_schema.my_quickstart_managed
 -- MAGIC - Revoke permission on Volume
 -- MAGIC - Show permissions on Volume
 
+-- MAGIC %md
+-- MAGIC #### Privileges you can grant on Hive metastore objects
+-- MAGIC SELECT: gives read access to an object.
+-- MAGIC CREATE: gives ability to create an object (for example, a table in a schema).
+-- MAGIC MODIFY: gives ability to add, delete, and modify data to or from an object.
+-- MAGIC USAGE: does not give any abilities, but is an additional requirement to perform any action on a schema object.
+-- MAGIC READ_METADATA: gives ability to view an object and its metadata.
+-- MAGIC CREATE_NAMED_FUNCTION: gives ability to create a named UDF in an existing catalog or schema.
+-- MAGIC MODIFY_CLASSPATH: gives ability to add files to the Spark class path.
+-- MAGIC ALL PRIVILEGES: gives all privileges (is translated into all the above privileges).
+
 -- COMMAND ----------
 
 --- Lists all privileges that are granted on a Volume.
