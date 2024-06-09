@@ -111,6 +111,7 @@ az databricks workspace create \
 # 10. In Databricks Workspace 
       #10.1 Delete if Already Exisits & Create Metastore
         # AZ_CONTAINER_NAME@AZ_STORAGE_ACCOUNT_NAME.dfs.core.windows.net/        
+        # metastore@azsa304.dfs.core.windows.net/
         # Attach Workspace to Newly Created MetaStore
         # Launch Workspace: https://WORKSPACE_ID.azuredatabricks.net/aad/auth
       #10.2 Connect to Git Repo( https://oauth:TOKEN@github.com/NubeEra-DataEngineering/Databricks-notebooks.git  )
